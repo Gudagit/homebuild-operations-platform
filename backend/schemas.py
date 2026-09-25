@@ -73,3 +73,85 @@ class ConstructionStageOut(ConstructionStageBase):
 
     class Config:
         from_attributes = True
+
+
+class TaskBase(BaseModel):
+    title: str
+    description: str | None = None
+    status: str = "not_started"
+    due_date: str | None = None
+    stage_id: int
+    contractor_id: int | None = None
+
+
+class TaskCreate(TaskBase):
+    pass
+
+
+class TaskOut(TaskBase):
+    id: int
+    completed_at: datetime | None = None
+
+    class Config:
+        from_attributes = True
+
+
+class InspectionBase(BaseModel):
+    inspector_name: str | None = None
+    inspection_date: str | None = None
+    result: str = "pending"
+    notes: str | None = None
+    stage_id: int
+
+
+class InspectionCreate(InspectionBase):
+    pass
+
+
+class InspectionOut(InspectionBase):
+    id: int
+
+    class Config:
+        from_attributes = True
+
+class IssueBase(BaseModel):
+    title: str
+    description: str | None = None
+    priority: str = "medium"
+    status: str = "open"
+    due_date: str | None = None
+    inspection_id: int
+    contractor_id: int | None = None
+
+
+class IssueCreate(IssueBase):
+    pass
+
+
+class IssueOut(IssueBase):
+    id: int
+    resolved_at: datetime | None = None
+
+    class Config:
+        from_attributes = True
+
+
+class DocumentBase(BaseModel):
+    name: str
+    category: str | None = None
+    file_url: str | None = None
+    property_id: int
+
+
+class DocumentCreate(DocumentBase):
+    pass
+
+
+class DocumentOut(DocumentBase):
+    id: int
+    uploaded_at: datetime | None = None
+
+    class Config:
+        from_attributes = True
+
+

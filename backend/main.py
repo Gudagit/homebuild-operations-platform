@@ -98,3 +98,86 @@ def create_construction_stage(stage: schemas.ConstructionStageCreate, db: Sessio
     db.commit()
     db.refresh(new_stage)
     return new_stage
+
+@app.get("/tasks", response_model=list[schemas.TaskOut])
+def get_tasks(db: Session = Depends(get_db)):
+    return db.query(models.Task).all()
+
+
+@app.post("/tasks", response_model=schemas.TaskOut)
+def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
+    new_task = models.Task(
+        title=task.title,
+        description=task.description,
+        status=task.status,
+        due_date=task.due_date,
+        stage_id=task.stage_id,
+        contractor_id=task.contractor_id,
+    )
+    db.add(new_task)
+    db.commit()
+    db.refresh(new_task)
+    return new_task
+
+
+@app.get("/inspections", response_model=list[schemas.InspectionOut])
+def get_inspections(db: Session = Depends(get_db)):
+    return db.query(models.Inspection).all()
+
+
+@app.post("/inspections", response_model=schemas.InspectionOut)
+def create_inspection(inspection: schemas.InspectionCreate, db: Session = Depends(get_db)):
+    new_inspection = models.Inspection(
+        inspector_name=inspection.inspector_name,
+        inspection_date=inspection.inspection_date,
+        result=inspection.result,
+        notes=inspection.notes,
+        stage_id=inspection.stage_id,
+    )
+    db.add(new_inspection)
+    db.commit()
+    db.refresh(new_inspection)
+    return new_inspection
+
+@app.get("/issues", response_model=list[schemas.IssueOut])
+def get_issues(db: Session = Depends(get_db)):
+    return db.query(models.Issue).all()
+
+
+@app.post("/issues", response_model=schemas.IssueOut)
+def create_issue(issue: schemas.IssueCreate, db: Session = Depends(get_db)):
+    new_issue = models.Issue(
+        title=issue.title,
+        description=issue.description,
+        priority=issue.priority,
+        status=issue.status,
+        due_date=issue.due_date,
+        inspection_id=issue.inspection_id,
+        contractor_id=issue.contractor_id,
+    )
+    db.add(new_issue)
+    db.commit()
+    db.refresh(new_issue)
+    return new_issue
+
+
+@app.get("/documents", response_model=list[schemas.DocumentOut])
+def get_documents(db: Session = Depends(get_db)):
+    return db.query(models.Document).all()
+
+
+@app.post("/documents", response_model=schemas.DocumentOut)
+def create_document(document: schemas.DocumentCreate, db: Session = Depends(get_db)):
+    new_document = models.Document(
+        name=document.name,
+        category=document.category,
+        file_url=document.file_url,
+        property_id=document.property_id,
+        uploaded_at=datetime.utcnow(),
+    )
+    db.add(new_document)
+    db.commit()
+    db.refresh(new_document)
+    return new_document
+
+
