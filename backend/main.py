@@ -92,8 +92,12 @@ def create_contractor(contractor: schemas.ContractorCreate, db: Session = Depend
 
 
 @app.get("/construction-stages", response_model=list[schemas.ConstructionStageOut])
-def get_construction_stages(db: Session = Depends(get_db)):
-    return db.query(models.ConstructionStage).all()
+def get_construction_stages(property_id: int | None = None, db: Session = Depends(get_db)):
+    query = db.query(models.ConstructionStage)
+    if property_id is not None:
+        query = query.filter(models.ConstructionStage.property_id == property_id)
+    return query.all()
+
 
 
 @app.post("/construction-stages", response_model=schemas.ConstructionStageOut)
@@ -112,8 +116,12 @@ def create_construction_stage(stage: schemas.ConstructionStageCreate, db: Sessio
     return new_stage
 
 @app.get("/tasks", response_model=list[schemas.TaskOut])
-def get_tasks(db: Session = Depends(get_db)):
-    return db.query(models.Task).all()
+def get_tasks(stage_id: int | None = None, db: Session = Depends(get_db)):
+    query = db.query(models.Task)
+    if stage_id is not None:
+        query = query.filter(models.Task.stage_id == stage_id)
+    return query.all()
+
 
 
 @app.post("/tasks", response_model=schemas.TaskOut)
@@ -133,8 +141,11 @@ def create_task(task: schemas.TaskCreate, db: Session = Depends(get_db)):
 
 
 @app.get("/inspections", response_model=list[schemas.InspectionOut])
-def get_inspections(db: Session = Depends(get_db)):
-    return db.query(models.Inspection).all()
+def get_inspections(stage_id: int | None = None, db: Session = Depends(get_db)):
+    query = db.query(models.Inspection)
+    if stage_id is not None:
+        query = query.filter(models.Inspection.stage_id == stage_id)
+    return query.all()
 
 
 @app.post("/inspections", response_model=schemas.InspectionOut)
