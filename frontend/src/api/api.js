@@ -59,3 +59,13 @@ export async function updatePropertyStatus(id, status) {
   }
   return data
 }
+export async function login(email, password) {
+  const response = await fetch(`${BASE_URL}/login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
+    method: 'POST',
+  })
+  const data = await response.json()
+  if (!response.ok) {
+    throw new Error(data.detail)
+  }
+  return data
+}

@@ -4,6 +4,8 @@ import PropertyDetail from './pages/PropertyDetail'
 import Contractors from './pages/Contractors'
 import Issues from './pages/Issues'
 import Documents from './pages/Documents'
+import Login from './pages/Login'
+
 
 
 function App() {
@@ -13,7 +15,8 @@ function App() {
         <Link to="/" className="text-gray-300 hover:text-white">Dashboard</Link>
         <Link to="/contractors" className="text-gray-300 hover:text-white">Contractors</Link>
         <Link to="/issues" className="text-gray-300 hover:text-white">Issues</Link>
-       <Link to="/documents" className="text-gray-300 hover:text-white">Documents</Link>
+        <Link to="/documents" className="text-gray-300 hover:text-white">Documents</Link>
+        <Link to="/login" className="text-gray-300 hover:text-white">Login</Link>
 
       </nav>
       <Routes>
@@ -22,6 +25,8 @@ function App() {
         <Route path="/contractors" element={<Contractors />} />
         <Route path="/issues" element={<Issues />} />
         <Route path="/documents" element={<Documents />} />
+        <Route path="/login" element={<Login />} />
+
 
 
       </Routes>
