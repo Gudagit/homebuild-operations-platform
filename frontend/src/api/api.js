@@ -35,3 +35,15 @@ export async function getIssues() {
   const response = await fetch(`${BASE_URL}/issues`)
   return response.json()
 }
+export async function getDocuments() {
+  const response = await fetch(`${BASE_URL}/documents`)
+  return response.json()
+}
+export async function createContractor(data) {
+  const response = await fetch(`${BASE_URL}/contractors`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  return response.json()
+}
