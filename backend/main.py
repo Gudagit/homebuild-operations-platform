@@ -203,4 +203,28 @@ def create_document(document: schemas.DocumentCreate, db: Session = Depends(get_
     db.refresh(new_document)
     return new_document
 
+@app.patch("/properties/{property_id}/status", response_model=schemas.PropertyOut)
+def update_property_status(property_id: int, status_update: schemas.PropertyStatusUpdate, db: Session = Depends(get_db)):
+    property = db.query(models.Property).filter(models.Property.id == property_id).first()
+    if not property:
+        raise HTTPException(status_code=404, detail="Property not found")
+    if status_update.status == "completed":
+        open_issues_count = (
+            db.query(models.Issue)
+            .join(models.Inspection, models.Issue.inspection_id == models.Inspection.id)
+            .join(models.ConstructionStage, models.Inspection.stage_id == models.ConstructionStage.id)
+            .filter(models.ConstructionStage.property_id == property_id)
+            .filter(models.Issue.status == "open")
+            .count()
+        )
+        if open_issues_count > 0:
+            raise HTTPException(
+                status_code=400,
+                detail="Cannot mark property as completed while open issues exist",
+            )
+
+    property.status = status_update.status
+    db.commit()
+    db.refresh(property)
+    return property
 

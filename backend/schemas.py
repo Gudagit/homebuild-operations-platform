@@ -153,5 +153,8 @@ class DocumentOut(DocumentBase):
 
     class Config:
         from_attributes = True
+class PropertyStatusUpdate(BaseModel):
+    status: str
+
 
 

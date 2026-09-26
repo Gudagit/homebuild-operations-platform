@@ -47,3 +47,15 @@ export async function createContractor(data) {
   })
   return response.json()
 }
+export async function updatePropertyStatus(id, status) {
+  const response = await fetch(`${BASE_URL}/properties/${id}/status`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status }),
+  })
+  const data = await response.json()
+  if (!response.ok) {
+    throw new Error(data.detail)
+  }
+  return data
+}

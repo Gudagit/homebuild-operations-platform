@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { getPropertyById, getConstructionStages, getTasks, getInspections } from '../api/api'
+import { getPropertyById, getConstructionStages, getTasks, getInspections, updatePropertyStatus } from '../api/api'
+
 
 function PropertyDetail() {
   const { id } = useParams()
   const [property, setProperty] = useState(null)
   const [stages, setStages] = useState([])
+  const [error, setError] = useState(null)
+
 
   useEffect(() => {
     getPropertyById(id).then(setProperty)
@@ -21,6 +24,17 @@ function PropertyDetail() {
     })
   }, [id])
 
+  async function handleComplete() {
+    try {
+      const updated = await updatePropertyStatus(id, 'completed')
+      setProperty(updated)
+      setError(null)
+    } catch (err) {
+      setError(err.message)
+    }
+  }
+  
+
   if (!property) {
     return <p className="text-gray-400 p-6">Loading...</p>
   }
@@ -29,7 +43,19 @@ function PropertyDetail() {
     <div className="max-w-3xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-gray-100">{property.name}</h1>
       <p className="text-gray-400">Address: {property.address}</p>
-      <p className="text-gray-400 mb-6">Status: {property.status}</p>
+      <p className="text-gray-400 mb-2">Status: {property.status}</p>
+
+<button
+  onClick={handleComplete}
+  className="bg-green-900 hover:bg-blue-500 text-white px-4 py-2 rounded mb-2"
+>
+  Mark as Completed
+</button>
+
+{error && (
+  <p className="text-red-400 mb-6">{error}</p>
+)}
+
 
       <h2 className="text-xl font-semibold text-gray-100 mb-3">Construction Stages</h2>
       <div className="space-y-4">
