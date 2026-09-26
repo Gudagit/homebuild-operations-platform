@@ -13,29 +13,37 @@ function Dashboard() {
   }, [])
 
   return (
-    <div>
-      <h1>HomeBuild Operations Platform</h1>
+    <div className="max-w-3xl mx-auto p-6">
 
-      <h2>Communities</h2>
-      <ul>
-        {communities.map((community) => (
-          <li key={community.id}>
-            {community.name} — {community.location}
-          </li>
-        ))}
-      </ul>
+      <h1 className="text-3xl font-bold text-gray-100">HomeBuild Operations Platform</h1>
 
-      <h2>Properties</h2>
-      <ul>
-      {properties.map((property) => (
-  <li key={property.id}>
-    <Link to={`/properties/${property.id}`}>
-      {property.name} — {property.address} — Status: {property.status}
-    </Link>
-  </li>
-))}
 
-      </ul>
+      <h2 className="text-xl font-semibold mt-6 mb-2">Communities</h2>
+        <ul className="space-y-1">
+          {communities.map((community) => (
+            <li key={community.id} className="text-gray-400">
+
+              {community.name} — {community.location}
+            </li>
+          ))}
+        </ul>
+
+        <h2 className="text-xl font-semibold mt-6 mb-2">Properties</h2>
+
+        <ul className="space-y-1">
+            {properties.map((property) => (
+              <li key={property.id}>
+                <Link
+                  to={`/properties/${property.id}`}
+                  className="text-gray-300 hover:text-white hover:underline"
+          >
+
+        {property.name} — {property.address} — Status: {property.status}
+      </Link>
+    </li>
+  ))}
+</ul>
+
     </div>
   )
 }

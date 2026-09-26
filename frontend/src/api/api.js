@@ -31,3 +31,7 @@ export async function getInspections(stageId) {
   const response = await fetch(`${BASE_URL}/inspections?stage_id=${stageId}`)
   return response.json()
 }
+export async function getIssues() {
+  const response = await fetch(`${BASE_URL}/issues`)
+  return response.json()
+}
