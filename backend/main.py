@@ -2,8 +2,6 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime
 from fastapi.middleware.cors import CORSMiddleware
-from auth import hash_password
-from auth import hash_password, verify_password, create_access_token
 from auth import hash_password, verify_password, create_access_token, get_current_user
 
 
