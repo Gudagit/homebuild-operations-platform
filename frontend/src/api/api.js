@@ -101,3 +101,100 @@ export async function register(data) {
   }
   return result
 }
+export async function createProperty(data) {
+  const token = localStorage.getItem('token')
+  const response = await fetch(`${BASE_URL}/properties`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.detail)
+  }
+  return result
+}
+export async function createConstructionStage(data) {
+  const token = localStorage.getItem('token')
+  const response = await fetch(`${BASE_URL}/construction-stages`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.detail)
+  }
+  return result
+}
+export async function createTask(data) {
+  const token = localStorage.getItem('token')
+  const response = await fetch(`${BASE_URL}/tasks`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.detail)
+  }
+  return result
+}
+
+export async function createInspection(data) {
+  const token = localStorage.getItem('token')
+  const response = await fetch(`${BASE_URL}/inspections`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.detail)
+  }
+  return result
+}
+export async function createCommunity(data) {
+  const token = localStorage.getItem('token')
+  const response = await fetch(`${BASE_URL}/communities`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.detail)
+  }
+  return result
+}
+export async function createIssue(data) {
+  const token = localStorage.getItem('token')
+  const response = await fetch(`${BASE_URL}/issues`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(data),
+  })
+  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.detail)
+  }
+  return result
+}
