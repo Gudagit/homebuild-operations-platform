@@ -23,7 +23,8 @@ def test_register_and_login():
     assert register_response.status_code == 200
     assert register_response.json()["email"] == unique_email
 
-    login_response = client.post(f"/login?email={unique_email}&password=testpass123")
+    login_response = client.post("/login", json={"email": unique_email, "password": "testpass123"})
+
     assert login_response.status_code == 200
     assert "access_token" in login_response.json()
 def test_cannot_complete_property_with_open_issue():
@@ -34,7 +35,8 @@ def test_cannot_complete_property_with_open_issue():
         "password": "testpass123",
         "role": "manager",
     })
-    login_response = client.post(f"/login?email={unique_email}&password=testpass123")
+    login_response = client.post("/login", json={"email": unique_email, "password": "testpass123"})
+
     token = login_response.json()["access_token"]
     headers = {"Authorization": f"Bearer {token}"}
 
