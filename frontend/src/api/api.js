@@ -48,9 +48,13 @@ export async function createContractor(data) {
   return response.json()
 }
 export async function updatePropertyStatus(id, status) {
+  const token = localStorage.getItem('token')
   const response = await fetch(`${BASE_URL}/properties/${id}/status`, {
     method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({ status }),
   })
   const data = await response.json()
@@ -59,6 +63,7 @@ export async function updatePropertyStatus(id, status) {
   }
   return data
 }
+
 export async function login(email, password) {
   const response = await fetch(`${BASE_URL}/login?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`, {
     method: 'POST',
@@ -68,4 +73,28 @@ export async function login(email, password) {
     throw new Error(data.detail)
   }
   return data
+}
+export function getCurrentUser() {
+  const token = localStorage.getItem('token')
+  if (!token) return null
+
+  const payload = token.split('.')[1]
+  const decoded = JSON.parse(atob(payload))
+  return { email: decoded.sub, role: decoded.role }
+}
+
+export function logout() {
+  localStorage.removeItem('token')
+}
+export async function register(data) {
+  const response = await fetch(`${BASE_URL}/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  })
+  const result = await response.json()
+  if (!response.ok) {
+    throw new Error(result.detail)
+  }
+  return result
 }
