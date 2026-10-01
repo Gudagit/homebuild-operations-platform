@@ -39,7 +39,7 @@ function Login() {
           className="w-full bg-[#0a0f0d] border border-gray-700 rounded p-2 text-gray-100"
           required
         />
-        <button type="submit" className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded">
+        <button type="submit" className="bg-green-900 hover:bg-green-800 text-white px-4 py-2 rounded">
           Login
         </button>
         {error && <p className="text-red-400">{error}</p>}

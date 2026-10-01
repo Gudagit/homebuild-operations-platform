@@ -157,7 +157,7 @@ function PropertyDetail() {
       <option key={stage.id} value={stage.id}>{stage.name}</option>
     ))}
   </select>
-  <button type="submit" className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded">
+  <button type="submit" className="bg-green-900 hover:bg-green-800 text-white px-4 py-2 rounded">
     Add Task
   </button>
 </form>
